@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Table, Text, Button, HelpButton } from '@axa-fr/react-toolkit-all';
 import { CalculatorService } from '../../services/calc/calculator-service';
 import { InstanceService } from '../../services/calc/instance-service';
@@ -20,9 +20,18 @@ export const HomeComponent = () => {
   const i2Data = instanceService.getInstanceData('I2');
   const i3Data = instanceService.getInstanceData('I3');
 
-  console.log(i1Data);
-  console.log(i2Data);
-  console.log(i3Data);
+  useEffect(() => {
+    setResultProjection(0);
+    setResultActuel(0);
+    setResultDiff(0);
+  }, [
+    i1Number,
+    i2Number,
+    i3Number,
+    i1NumberProjection,
+    i2NumberProjection,
+    i3NumberProjection,
+  ]);
 
   const calculHandler = () => {
     const service = new CalculatorService();
@@ -190,8 +199,12 @@ export const HomeComponent = () => {
         </Button>
         <br />
         <br />
-        <h2>Résultat</h2>
-        <p>Le coût actuel est de : {resultActuel}€ / mois</p>
+        {parseInt(resultActuel) > 0 && (
+          <>
+            <h2>Résultat</h2>
+            <p>Le coût actuel est de : {resultActuel}€ / mois</p>
+          </>
+        )}
         {parseInt(resultProjection) > 0 && (
           <p>Le coût de la projection est de : {resultProjection}€ / mois</p>
         )}

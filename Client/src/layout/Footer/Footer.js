@@ -19,7 +19,7 @@ const FooterApp = () => (
             <i>{getLabel(labels, 'complementary')}</i>
           </div>
           <div className="footer__info">
-            <p>{getLabel(labels, 'version', [version])}</p>
+            
           </div>
         </div>
       </div>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Table, Text, Button, HelpButton } from '@axa-fr/react-toolkit-all';
 import { CalculatorService } from '../../services/calc/calculator-service';
 import { InstanceService } from '../../services/calc/instance-service';
@@ -9,18 +9,35 @@ export const Autoscale = () => {
   const [i2Number, seti2Number] = useState(0);
   const [i3Number, seti3Number] = useState(0);
   const [resultActuel, setResultActuel] = useState(0);
+  const [resultActuelWorkingHours, setResultActuelWorkingHours] = useState(0);
+  const [resultActuelWithoutScale, setResultActuelWithoutScale] = useState(0);
   const [resultDiff, setResultDiff] = useState(0);
+  const [resultDiffWorkingHours, setResultDiffWorkingHours] = useState(0);
 
   const instanceService = new InstanceService();
   const i1Data = instanceService.getInstanceData('I1');
   const i2Data = instanceService.getInstanceData('I2');
   const i3Data = instanceService.getInstanceData('I3');
 
+  useEffect(() => {
+    setResultActuel(0);
+    setResultActuelWithoutScale(0);
+    setResultDiff(0);
+  }, [i1Number, i2Number, i3Number]);
+
+  const roundDecimal = (nombre, precision) => {
+    let tmp = Math.pow(10, precision);
+    return Math.round(nombre * tmp) / tmp;
+  };
+
   const calculHandler = () => {
     const service = new CalculatorService();
 
     if (i1Number > 0) {
       setResultActuel(service.calculateAutoScaleCost({ I1: i1Number }));
+      setResultActuelWorkingHours(
+        service.calculateAutoScaleWorkingHoursCost({ I1: i1Number })
+      );
       setResultDiff(
         service.calculateCost([
           { I1: i1Number },
@@ -28,8 +45,18 @@ export const Autoscale = () => {
           { I3: i3Number },
         ]) - service.calculateAutoScaleCost({ I1: i1Number })
       );
+      setResultDiffWorkingHours(
+        service.calculateCost([
+          { I1: i1Number },
+          { I2: i2Number },
+          { I3: i3Number },
+        ]) - service.calculateAutoScaleWorkingHoursCost({ I1: i1Number })
+      );
     } else if (i2Number > 0) {
       setResultActuel(service.calculateAutoScaleCost({ I2: i2Number }));
+      setResultActuelWorkingHours(
+        service.calculateAutoScaleWorkingHoursCost({ I2: i2Number })
+      );
       setResultDiff(
         service.calculateCost([
           { I1: i1Number },
@@ -37,8 +64,18 @@ export const Autoscale = () => {
           { I3: i3Number },
         ]) - service.calculateAutoScaleCost({ I2: i2Number })
       );
+      setResultDiffWorkingHours(
+        service.calculateCost([
+          { I1: i1Number },
+          { I2: i2Number },
+          { I3: i3Number },
+        ]) - service.calculateAutoScaleWorkingHoursCost({ I2: i2Number })
+      );
     } else {
       setResultActuel(service.calculateAutoScaleCost({ I3: i3Number }));
+      setResultActuelWorkingHours(
+        service.calculateAutoScaleWorkingHoursCost({ I3: i3Number })
+      );
       setResultDiff(
         service.calculateCost([
           { I1: i1Number },
@@ -46,15 +83,30 @@ export const Autoscale = () => {
           { I3: i3Number },
         ]) - service.calculateAutoScaleCost({ I3: i3Number })
       );
+      setResultDiffWorkingHours(
+        service.calculateCost([
+          { I1: i1Number },
+          { I2: i2Number },
+          { I3: i3Number },
+        ]) - service.calculateAutoScaleWorkingHoursCost({ I3: i3Number })
+      );
     }
 
-    setResultActuel(
+    setResultActuelWithoutScale(
       service.calculateCost([
         { I1: i1Number },
         { I2: i2Number },
         { I3: i3Number },
       ])
     );
+
+    // setResultActuel(
+    //   service.calculateCost([
+    //     { I1: i1Number },
+    //     { I2: i2Number },
+    //     { I3: i3Number },
+    //   ])
+    // );
   };
 
   const setInputValue = (name, value) => {
@@ -181,13 +233,31 @@ export const Autoscale = () => {
         </Button>
         <br />
         <br />
-        <h2>Résultat</h2>
-        <p>Le coût actuel est de : {resultActuel}€ / mois</p>
-        <p>
-          Econnomie réalisé :
-          <span className="badge badge-success">{Math.round(resultDiff)}</span>€
-          / mois
-        </p>
+        {parseInt(resultActuel) > 0 && (
+          <>
+            <h2>Résultat</h2>
+            <p>
+              Le coût actuel avec Autoscale le samedi est de : {resultActuel}€ /
+              mois
+            </p>
+            <p>
+              Le coût actuel avec Autoscale le soir est de :
+              {resultActuelWorkingHours}€ / mois
+            </p>
+            <p>
+              Le coût actuel sans Autoscale est de : {resultActuelWithoutScale}€
+              / mois
+            </p>
+            <br />
+            {/* <p>
+              Econnomie réalisé :
+              <span className="badge badge-success">
+                {roundDecimal(resultDiff, 2)}
+              </span>
+              € / mois
+            </p> */}
+          </>
+        )}
         <br />
         <br /> <br />
         <br />
