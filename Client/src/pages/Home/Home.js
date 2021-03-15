@@ -1,17 +1,25 @@
 import React, { useState } from 'react';
 import { Table, Text, Button } from '@axa-fr/react-toolkit-all';
+import { CalculatorService } from '../../services/calc/calculator-service';
 import './Home.scss';
- 
+
 export const HomeComponent = () => {
   const [i1Number, seti1Number] = useState(0);
   const [i2Number, seti2Number] = useState(0);
   const [i3Number, seti3Number] = useState(0);
   const [result, setResult] = useState(0);
- 
+
   const calculHandler = () => {
-    console.log('test');
+    const service = new CalculatorService();
+    setResult(
+      service.calculateCost([
+        { I1: i1Number },
+        { I2: i2Number },
+        { I3: i3Number },
+      ])
+    );
   };
- 
+
   return (
     <>
       <div className="home container">
@@ -54,13 +62,28 @@ export const HomeComponent = () => {
           <Table.Body>
             <Table.Tr>
               <Table.Td>
-                <Text id="i1-nb" name="i1-nb" value={i1Number} />
+                <Text
+                  id="i1-nb"
+                  name="i1-nb"
+                  value={i1Number}
+                  onChange={({ value }) => seti1Number(parseInt(value) || 0)}
+                />
               </Table.Td>
               <Table.Td>
-                <Text id="i1-nb" name="i1-nb" value={i2Number} />
+                <Text
+                  id="i1-nb"
+                  name="i1-nb"
+                  value={i2Number}
+                  onChange={({ value }) => seti2Number(parseInt(value) || 0)}
+                />
               </Table.Td>
               <Table.Td>
-                <Text id="i1-nb" name="i1-nb" value={i3Number} />
+                <Text
+                  id="i1-nb"
+                  name="i1-nb"
+                  value={i3Number}
+                  onChange={({ value }) => seti3Number(parseInt(value) || 0)}
+                />
               </Table.Td>
             </Table.Tr>
           </Table.Body>

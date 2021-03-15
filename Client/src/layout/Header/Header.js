@@ -7,12 +7,10 @@ import './Header.scss';
 const HeaderComponent = ({ userName }) => (
   <Header>
     <Name
-      title="Starter kit"
-      subtitle="A little project as a demo for all our tools"
+      title="Simulateur Azure Finops"
       img={logo}
       alt="Logo"
     />
-    <User name={userName} href="#" profile="Inspecteur" />
   </Header>
 );
 
