@@ -1,0 +1,7 @@
+{
+    "instances": [
+        { "nom": "I1", "coutMensuel": 144 },
+		{ "nom": "I2", "coutMensuel": 288 },
+		{ "nom": "I3", "coutMensuel": 576 }
+    ]
+}
