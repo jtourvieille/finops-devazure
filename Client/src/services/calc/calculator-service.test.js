@@ -103,6 +103,60 @@ describe('Calculator service', () => {
     });
   });
 
+  describe('calculateAutoScaleWorkingDaysAndWeekEndCost', () => {
+    it('should return zero when data to cost are undefined', () => {
+      // given
+      const instanceToCost = 0;
+
+      // when
+      const cost = calculatorService.calculateAutoScaleWorkingDaysAndWeekEndCost(
+        instanceToCost
+      );
+
+      // then
+      expect(cost).toEqual(0);
+    });
+
+    it('should return 264 when data to cost are three I3', () => {
+      // given
+      const instanceToCost = { I1: 3 };
+
+      // when
+      const cost = calculatorService.calculateAutoScaleWorkingDaysAndWeekEndCost(
+        instanceToCost
+      );
+
+      // then
+      expect(cost).toEqual(264);
+    });
+
+    it('should return 768 when data to cost are five I3', () => {
+      // given
+      const instanceToCost = { I2: 5 };
+
+      // when
+      const cost = calculatorService.calculateAutoScaleWorkingDaysAndWeekEndCost(
+        instanceToCost
+      );
+
+      // then
+      expect(cost).toEqual(768);
+    });
+
+    it('should return 816 when data to cost are three I3', () => {
+      // given
+      const instanceToCost = { I3: 2 };
+
+      // when
+      const cost = calculatorService.calculateAutoScaleWorkingDaysAndWeekEndCost(
+        instanceToCost
+      );
+
+      // then
+      expect(cost).toEqual(816);
+    });
+  });
+
   describe('calculateCost', () => {
     it('should return zero when data to cost are undefined', () => {
       // given

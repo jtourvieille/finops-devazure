@@ -81,4 +81,28 @@ export class CalculatorService {
 
     return Math.round(cost * 100) / 100;
   }
+
+  calculateAutoScaleWorkingDaysAndWeekEndCost(instanceToCost) {
+    let instanceLabel;
+    let quantity;
+
+    let cost = 0;
+
+    if (instanceToCost) {
+      for (const [key, value] of Object.entries(instanceToCost)) {
+        instanceLabel = key;
+        quantity = value;
+      }
+
+      const instanceCost = this.findInstanceCost(instanceLabel);
+
+      // 48 heures du WE et 50 heures semaine sur une instance
+      // 70 heures en mode normal
+      // 168: nombres d'heures totales sur une semaine
+      // (98 + 70 N)*i / 168
+      cost = ((98 + 70 * quantity) * instanceCost) / 168;
+    }
+
+    return Math.round(cost * 100) / 100;
+  }
 }
