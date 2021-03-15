@@ -1,7 +1,7 @@
 {
     "instances": [
-        { "nom": "I1", "coutMensuel": 144 },
-		{ "nom": "I2", "coutMensuel": 288 },
-		{ "nom": "I3", "coutMensuel": 576 }
+        { "nom": "I1", "coutMensuel": 144, "acu": 210, "ram": 3.5 },
+		{ "nom": "I2", "coutMensuel": 288, "acu": 420, "ram": 7 },
+		{ "nom": "I3", "coutMensuel": 576, "acu": 840, "ram": 14 }
     ]
 }
