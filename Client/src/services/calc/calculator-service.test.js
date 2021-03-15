@@ -49,6 +49,60 @@ describe('Calculator service', () => {
     });
   });
 
+  describe('calculateAutoScaleWorkingHoursCost', () => {
+    it('should return zero when data to cost are undefined', () => {
+      // given
+      const instanceToCost = 0;
+
+      // when
+      const cost = calculatorService.calculateAutoScaleWorkingHoursCost(
+        instanceToCost
+      );
+
+      // then
+      expect(cost).toEqual(0);
+    });
+
+    it('should return 346.29 when data to cost are three I3', () => {
+      // given
+      const instanceToCost = { I1: 3 };
+
+      // when
+      const cost = calculatorService.calculateAutoScaleWorkingHoursCost(
+        instanceToCost
+      );
+
+      // then
+      expect(cost).toEqual(346.29);
+    });
+
+    it('should return 1097.14 when data to cost are five I3', () => {
+      // given
+      const instanceToCost = { I2: 5 };
+
+      // when
+      const cost = calculatorService.calculateAutoScaleWorkingHoursCost(
+        instanceToCost
+      );
+
+      // then
+      expect(cost).toEqual(1097.14);
+    });
+
+    it('should return 980.57 when data to cost are three I3', () => {
+      // given
+      const instanceToCost = { I3: 2 };
+
+      // when
+      const cost = calculatorService.calculateAutoScaleWorkingHoursCost(
+        instanceToCost
+      );
+
+      // then
+      expect(cost).toEqual(980.57);
+    });
+  });
+
   describe('calculateCost', () => {
     it('should return zero when data to cost are undefined', () => {
       // given
