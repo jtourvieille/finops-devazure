@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { Table, Text, Button } from '@axa-fr/react-toolkit-all';
+import { Table, Text, Button, HelpButton } from '@axa-fr/react-toolkit-all';
 import { CalculatorService } from '../../services/calc/calculator-service';
+import { InstanceService } from '../../services/calc/instance-service';
 import './Home.scss';
 
 export const HomeComponent = () => {
@@ -13,6 +14,15 @@ export const HomeComponent = () => {
   const [resultActuel, setResultActuel] = useState(0);
   const [resultProjection, setResultProjection] = useState(0);
   const [resultDiff, setResultDiff] = useState(0);
+
+  const instanceService = new InstanceService();
+  const i1Data = instanceService.getInstanceData('I1');
+  const i2Data = instanceService.getInstanceData('I2');
+  const i3Data = instanceService.getInstanceData('I3');
+
+  console.log(i1Data);
+  console.log(i2Data);
+  console.log(i3Data);
 
   const calculHandler = () => {
     const service = new CalculatorService();
@@ -61,6 +71,12 @@ export const HomeComponent = () => {
                     title="144€ /mois">
                     i1
                   </span>
+                  <HelpButton classModifier="small" mode="hover">
+                    <ul>
+                      <li>{i1Data.acu} ACU</li>
+                      <li>{i1Data.ram} Go RAM</li>
+                    </ul>
+                  </HelpButton>
                 </span>
               </Table.Th>
               <Table.Th>
@@ -71,6 +87,12 @@ export const HomeComponent = () => {
                     title="288€ /mois">
                     i2
                   </span>
+                  <HelpButton classModifier="small" mode="hover">
+                    <ul>
+                      <li>{i2Data.acu} ACU</li>
+                      <li>{i2Data.ram} Go RAM</li>
+                    </ul>
+                  </HelpButton>
                 </span>
               </Table.Th>
               <Table.Th>
@@ -81,6 +103,12 @@ export const HomeComponent = () => {
                     title="576€ /mois">
                     i3
                   </span>
+                  <HelpButton classModifier="small" mode="hover">
+                    <ul>
+                      <li>{i3Data.acu} ACU</li>
+                      <li>{i3Data.ram} Go RAM</li>
+                    </ul>
+                  </HelpButton>
                 </span>
               </Table.Th>
             </Table.Tr>
