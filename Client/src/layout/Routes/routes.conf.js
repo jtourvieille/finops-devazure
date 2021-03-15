@@ -1,25 +1,25 @@
+import { Autoscale } from 'pages/Autoscale/Autoscale';
 import Home from 'pages/Home';
-import Dashboard from 'pages/Dashboard';
-
+ 
 const routes = [
   {
     name: 'Home',
     path: '/',
     component: Home,
     titlebar: {
-      title: 'Accueil',
+      title: 'Simulateur',
       subtitle: '',
     },
   },
   {
-    name: 'Dashboard',
-    path: '/dashboard',
-    component: Dashboard,
+    name: 'SimulateurAutoscale',
+    path: '/simulateurAutoscale',
+    component: Autoscale,
     titlebar: {
-      title: 'Dashboard',
+      title: 'Autoscale',
       subtitle: '',
     },
   },
 ];
-
+ 
 export default routes;

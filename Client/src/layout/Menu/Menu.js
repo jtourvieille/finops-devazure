@@ -18,6 +18,16 @@ export const Menu = ({ location }) => (
         </Link>
       }
     />
+	<NavBarItem
+      classModifier={classNames({
+        active: location && location.pathname === '/simulateurAutoscale',
+      })}
+      actionElt={
+        <Link className="af-nav__link" to="/simulateurAutoscale">
+          Simulateur Autoscale
+        </Link>
+      }
+    />
   </NavBar>
 );
 
