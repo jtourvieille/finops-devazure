@@ -246,7 +246,7 @@ export const Autoscale = () => {
             </p>
             <p>
               Le coût actuel sans Autoscale est de : {resultActuelWithoutScale}€
-              / mois
+              / moi
             </p>
             <br />
             {/* <p>
