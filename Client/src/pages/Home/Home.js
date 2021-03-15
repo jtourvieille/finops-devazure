@@ -1,43 +1,85 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-
+import React, { useState } from 'react';
+import { Table, Text, Button } from '@axa-fr/react-toolkit-all';
 import './Home.scss';
-
-export const HomeComponent = ({ title, subtitle }) => (
-  <div className="home container">
-    <h1 className="af-title--content">Accueil</h1>
-    <table className="af-table">
-      <thead>
-        <tr>
-          <th>i1</th>
-          <th>i2</th>
-          <th>i3</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>
-            <input type="text" id="id1" name="id1" required />
-          </td>
-          <td>
-            <input type="text" id="id2" name="id2" required />
-          </td>
-          <td>
-            <input type="text" id="id3" name="id3" required />
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    <button>Calculer</button>
  
-    <h2>Résultats</h2>
-    <p>Le coût total est de : xx.xx€ / mois</p>
-  </div>
-);
-
-const propTypes = {
-  subtitle: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired,
+export const HomeComponent = () => {
+  const [i1Number, seti1Number] = useState(0);
+  const [i2Number, seti2Number] = useState(0);
+  const [i3Number, seti3Number] = useState(0);
+  const [result, setResult] = useState(0);
+ 
+  const calculHandler = () => {
+    console.log('test');
+  };
+ 
+  return (
+    <>
+      <div className="home container">
+        <h1 className="af-title--content">Simulateur</h1>
+        <Table className="af-table">
+          <Table.Header>
+            <Table.Tr>
+              <Table.Th>
+                <span className="af-table-th-content">
+                  <span
+                    data-toggle="tooltip"
+                    data-placement="top"
+                    title="144€ /mois">
+                    i1
+                  </span>
+                </span>
+              </Table.Th>
+              <Table.Th>
+                <span className="af-table-th-content">
+                  <span
+                    data-toggle="tooltip"
+                    data-placement="top"
+                    title="288€ /mois">
+                    i2
+                  </span>
+                </span>
+              </Table.Th>
+              <Table.Th>
+                <span className="af-table-th-content">
+                  <span
+                    data-toggle="tooltip"
+                    data-placement="top"
+                    title="576€ /mois">
+                    i3
+                  </span>
+                </span>
+              </Table.Th>
+            </Table.Tr>
+          </Table.Header>
+          <Table.Body>
+            <Table.Tr>
+              <Table.Td>
+                <Text id="i1-nb" name="i1-nb" value={i1Number} />
+              </Table.Td>
+              <Table.Td>
+                <Text id="i1-nb" name="i1-nb" value={i2Number} />
+              </Table.Td>
+              <Table.Td>
+                <Text id="i1-nb" name="i1-nb" value={i3Number} />
+              </Table.Td>
+            </Table.Tr>
+          </Table.Body>
+        </Table>
+        <Button
+          classModifier="hasiconLeft"
+          id="validation-button"
+          onClick={calculHandler}>
+          <span className="af-btn__text">Calculer</span>
+          <i className="glyphicon glyphicon-stats" />
+        </Button>
+        <br />
+        <br />
+        <h2>Résultat</h2>
+        <p>Le coût total est de : {result}€ / mois</p>
+        <br />
+        <br /> <br />
+        <br />
+      </div>
+    </>
+  );
 };
-
-HomeComponent.propTypes = propTypes;
