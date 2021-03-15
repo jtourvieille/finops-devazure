@@ -1,4 +1,4 @@
-const CalculatorService = require('./calculator-service');
+import { CalculatorService } from 'services/calc/calculator-service';
 
 describe('Calculator service', () => {
 
@@ -59,6 +59,24 @@ describe('Calculator service', () => {
 
             // then
             expect(cost).toEqual(576*3);
+        })
+
+        it('should return 144*2+576*3 when data to cost contains 3 instances I2', () => {
+            // given
+            const dataToCost = [
+                {
+                    "I1": 2
+                },
+                {
+                    "I3": 3
+                }
+            ];
+
+            // when
+            const cost = calculatorService.calculateCost(dataToCost);
+
+            // then
+            expect(cost).toEqual(144*2+576*3);
         })
     });
 });

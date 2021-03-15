@@ -1,6 +1,6 @@
 const characteristics = require('./characteristics.json');
 
-class CalculatorService {
+export class CalculatorService {
     findInstanceCost(instanceLabel) {
         let instanceCost = 0;
         characteristics.instances.forEach((instance) => {
@@ -31,5 +31,3 @@ class CalculatorService {
         return cost;
     }
 }
-
-module.exports = CalculatorService;
