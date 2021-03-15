@@ -161,11 +161,22 @@ export const HomeComponent = () => {
         <br />
         <h2>Résultat</h2>
         <p>Le coût actuel est de : {resultActuel}€ / mois</p>
-        <p>Le coût de la projection est de : {resultProjection}€ / mois</p>
-        <p>
-          La différence de coût entre le service plan actuel et le service pla
-          projetté est de : {resultDiff}€ / mois
-        </p>
+        {parseInt(resultProjection) > 0 && (
+          <p>Le coût de la projection est de : {resultProjection}€ / mois</p>
+        )}
+        {parseInt(resultDiff) > 0 && parseInt(resultProjection) > 0 && (
+          <p>
+            Econnomie réalisé :
+            <span className="badge badge-success">{resultDiff}</span>€ / mois
+          </p>
+        )}
+        {parseInt(resultDiff) < 0 && parseInt(resultProjection) > 0 && (
+          <p>
+            Côut supplementaire :
+            <span className="badge badge-danger">{Math.abs(resultDiff)}</span>€
+            / mois
+          </p>
+        )}
         <br />
         <br /> <br />
         <br />
