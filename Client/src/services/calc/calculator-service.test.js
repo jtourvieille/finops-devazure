@@ -232,4 +232,220 @@ describe('Calculator service', () => {
       expect(cost).toEqual(144 * 2 + 576 * 3);
     });
   });
+
+  describe('calculateInternetAppAutoScaleCost', () => {
+    it('should return zero when data to cost are undefined', () => {
+      // given
+      const instanceToCost = 0;
+
+      // when
+      const cost = calculatorService.calculateAutoScaleWorkingDaysAndWeekEndCost(
+        instanceToCost
+      );
+
+      // then
+      expect(cost).toEqual(0);
+    });
+
+    it('should return 492 when data to cost are three I1', () => {
+      // given
+      const instanceToCost = { I1: 3 };
+
+      // when
+      const cost = calculatorService.calculateInternetAppAutoScaleCost(
+        instanceToCost
+      );
+
+      // then
+      expect(cost).toEqual(492);
+    });
+
+    it('should return 1188 when data to cost are four I2', () => {
+      // given
+      const instanceToCost = { I2: 4 };
+
+      // when
+      const cost = calculatorService.calculateInternetAppAutoScaleCost(
+        instanceToCost
+      );
+
+      // then
+      expect(cost).toEqual(1188);
+    });
+
+    it('should return 2784 when data to cost are five I3', () => {
+      // given
+      const instanceToCost = { I3: 5 };
+
+      // when
+      const cost = calculatorService.calculateInternetAppAutoScaleCost(
+        instanceToCost
+      );
+
+      // then
+      expect(cost).toEqual(2784);
+    });
+  });
+
+  describe('calculateInternetCompanyAppAutoScaleCost', () => {
+    it('should return zero when data to cost are undefined', () => {
+      // given
+      const instanceToCost = 0;
+
+      // when
+      const cost = calculatorService.calculateInternetCompanyAppAutoScaleCost(
+        instanceToCost
+      );
+
+      // then
+      expect(cost).toEqual(0);
+    });
+
+    it('should return 421,71 when data to cost are three I1', () => {
+      // given
+      const instanceToCost = { I1: 3 };
+
+      // when
+      const cost = calculatorService.calculateInternetCompanyAppAutoScaleCost(
+        instanceToCost
+      );
+
+      // then
+      expect(cost).toEqual(421.71);
+    });
+
+    it('should return 977,14 when data to cost are four I2', () => {
+      // given
+      const instanceToCost = { I2: 4 };
+
+      // when
+      const cost = calculatorService.calculateInternetCompanyAppAutoScaleCost(
+        instanceToCost
+      );
+
+      // then
+      expect(cost).toEqual(977.14);
+    });
+
+    it('should return 2221,71 when data to cost are five I3', () => {
+      // given
+      const instanceToCost = { I3: 5 };
+
+      // when
+      const cost = calculatorService.calculateInternetCompanyAppAutoScaleCost(
+        instanceToCost
+      );
+
+      // then
+      expect(cost).toEqual(2221.71);
+    });
+  });
+
+  describe('calculateDistributeurAppAutoScaleCost', () => {
+    it('should return zero when data to cost are undefined', () => {
+      // given
+      const instanceToCost = 0;
+
+      // when
+      const cost = calculatorService.calculateDistributeurAppAutoScaleCost(
+        instanceToCost
+      );
+
+      // then
+      expect(cost).toEqual(0);
+    });
+
+    it('should return 421,71 when data to cost are three I1', () => {
+      // given
+      const instanceToCost = { I1: 3 };
+
+      // when
+      const cost = calculatorService.calculateDistributeurAppAutoScaleCost(
+        instanceToCost
+      );
+
+      // then
+      expect(cost).toEqual(421.71);
+    });
+
+    it('should return 977,14 when data to cost are four I2', () => {
+      // given
+      const instanceToCost = { I2: 4 };
+
+      // when
+      const cost = calculatorService.calculateDistributeurAppAutoScaleCost(
+        instanceToCost
+      );
+
+      // then
+      expect(cost).toEqual(977.14);
+    });
+
+    it('should return 2221,71 when data to cost are five I3', () => {
+      // given
+      const instanceToCost = { I3: 5 };
+
+      // when
+      const cost = calculatorService.calculateDistributeurAppAutoScaleCost(
+        instanceToCost
+      );
+
+      // then
+      expect(cost).toEqual(2221.71);
+    });
+  });
+
+  describe('calculateAdministratifAppAutoScaleCost', () => {
+    it('should return zero when data to cost are undefined', () => {
+      // given
+      const instanceToCost = 0;
+
+      // when
+      const cost = calculatorService.calculateAdministratifAppAutoScaleCost(
+        instanceToCost
+      );
+
+      // then
+      expect(cost).toEqual(0);
+    });
+
+    it('should return 390,86 when data to cost are three I1', () => {
+      // given
+      const instanceToCost = { I1: 3 };
+
+      // when
+      const cost = calculatorService.calculateAdministratifAppAutoScaleCost(
+        instanceToCost
+      );
+
+      // then
+      expect(cost).toEqual(390.86);
+    });
+
+    it('should return 884,57 when data to cost are four I2', () => {
+      // given
+      const instanceToCost = { I2: 4 };
+
+      // when
+      const cost = calculatorService.calculateAdministratifAppAutoScaleCost(
+        instanceToCost
+      );
+
+      // then
+      expect(cost).toEqual(884.57);
+    });
+
+    it('should return 1974,86 when data to cost are five I3', () => {
+      // given
+      const instanceToCost = { I3: 5 };
+
+      // when
+      const cost = calculatorService.calculateAdministratifAppAutoScaleCost(
+        instanceToCost
+      );
+
+      // then
+      expect(cost).toEqual(1974.86);
+    });
+  });
 });
