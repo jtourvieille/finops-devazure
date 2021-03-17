@@ -19,15 +19,17 @@ const App = ({ oidcEnabled = true }) => {
       configuration={oidcConfiguration.is4}
       UserStore={InMemoryWebStorage}
       isEnabled={false}>
-      <Router>
-        <OidcSecure>
-          <Header />
-          <div className="app">
-            <Routes />
-          </div>
-          <Footer />
-        </OidcSecure>
-      </Router>
+      <div className="app">
+        <Router>
+          <OidcSecure>
+            <Header />
+            <div className="app-content">
+              <Routes />
+            </div>
+            <Footer />
+          </OidcSecure>
+        </Router>
+      </div>
     </AuthenticationProvider>
   );
 };

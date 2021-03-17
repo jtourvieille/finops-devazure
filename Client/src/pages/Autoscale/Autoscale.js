@@ -3,16 +3,36 @@ import { Table, Text, Button, HelpButton } from '@axa-fr/react-toolkit-all';
 import { CalculatorService } from '../../services/calc/calculator-service';
 import { InstanceService } from '../../services/calc/instance-service';
 import './Autoscale.scss';
+import { CardPrice } from 'pages/Autoscale/CardPrice/CardPrice';
 
 export const Autoscale = () => {
   const [i1Number, seti1Number] = useState(0);
   const [i2Number, seti2Number] = useState(0);
   const [i3Number, seti3Number] = useState(0);
-  const [resultActuel, setResultActuel] = useState(0);
-  const [resultActuelWorkingHours, setResultActuelWorkingHours] = useState(0);
-  const [resultActuelWithoutScale, setResultActuelWithoutScale] = useState(0);
-  const [resultDiff, setResultDiff] = useState(0);
-  const [resultDiffWorkingHours, setResultDiffWorkingHours] = useState(0);
+
+  const [hasResults, setHasResults] = useState(false);
+  const [isDisabled, setIsDisabled] = useState(true);
+
+  const [cost, setCost] = useState(0);
+  const [autoScaleCost, setAutoScaleCost] = useState(0);
+  const [autoScaleWorkingHoursCost, setAutoScaleWorkingHoursCost] = useState(0);
+  const [
+    autoScaleWorkingDaysAndWeekEndCost,
+    setAutoScaleWorkingDaysAndWeekEndCost,
+  ] = useState(0);
+  const [internetAppAutoScaleCost, setInternetAppAutoScaleCost] = useState(0);
+  const [
+    internetCompanyAppAutoScaleCost,
+    setInternetCompanyAppAutoScaleCost,
+  ] = useState(0);
+  const [
+    distributeurAppAutoScaleCost,
+    setDistributeurAppAutoScaleCost,
+  ] = useState(0);
+  const [
+    administratifAppAutoScaleCost,
+    setAdministratifAppAutoScaleCost,
+  ] = useState(0);
 
   const instanceService = new InstanceService();
   const i1Data = instanceService.getInstanceData('I1');
@@ -20,79 +40,80 @@ export const Autoscale = () => {
   const i3Data = instanceService.getInstanceData('I3');
 
   useEffect(() => {
-    setResultActuel(0);
-    setResultActuelWithoutScale(0);
-    setResultDiff(0);
+    setHasResults(false);
+    if (i1Number > 0 || i2Number > 0 || i3Number > 0) {
+      setIsDisabled(false);
+    } else {
+      setIsDisabled(true);
+    }
   }, [i1Number, i2Number, i3Number]);
-
-  const roundDecimal = (nombre, precision) => {
-    let tmp = Math.pow(10, precision);
-    return Math.round(nombre * tmp) / tmp;
-  };
 
   const calculHandler = () => {
     const service = new CalculatorService();
 
     if (i1Number > 0) {
-      setResultActuel(service.calculateAutoScaleCost({ I1: i1Number }));
-      setResultActuelWorkingHours(
+      setAutoScaleCost(service.calculateAutoScaleCost({ I1: i1Number }));
+      setAutoScaleWorkingHoursCost(
         service.calculateAutoScaleWorkingHoursCost({ I1: i1Number })
       );
-      setResultDiff(
-        service.calculateCost([
-          { I1: i1Number },
-          { I2: i2Number },
-          { I3: i3Number },
-        ]) - service.calculateAutoScaleCost({ I1: i1Number })
+      setAutoScaleWorkingDaysAndWeekEndCost(
+        service.calculateAutoScaleWorkingDaysAndWeekEndCost({ I1: i1Number })
       );
-      setResultDiffWorkingHours(
-        service.calculateCost([
-          { I1: i1Number },
-          { I2: i2Number },
-          { I3: i3Number },
-        ]) - service.calculateAutoScaleWorkingHoursCost({ I1: i1Number })
+      setInternetAppAutoScaleCost(
+        service.calculateInternetAppAutoScaleCost({ I1: i1Number })
+      );
+      setInternetCompanyAppAutoScaleCost(
+        service.calculateInternetCompanyAppAutoScaleCost({ I1: i1Number })
+      );
+      setDistributeurAppAutoScaleCost(
+        service.calculateDistributeurAppAutoScaleCost({ I1: i1Number })
+      );
+      setAdministratifAppAutoScaleCost(
+        service.calculateAdministratifAppAutoScaleCost({ I1: i1Number })
       );
     } else if (i2Number > 0) {
-      setResultActuel(service.calculateAutoScaleCost({ I2: i2Number }));
-      setResultActuelWorkingHours(
+      setAutoScaleCost(service.calculateAutoScaleCost({ I2: i1Number }));
+      setAutoScaleWorkingHoursCost(
         service.calculateAutoScaleWorkingHoursCost({ I2: i2Number })
       );
-      setResultDiff(
-        service.calculateCost([
-          { I1: i1Number },
-          { I2: i2Number },
-          { I3: i3Number },
-        ]) - service.calculateAutoScaleCost({ I2: i2Number })
+      setAutoScaleWorkingDaysAndWeekEndCost(
+        service.calculateAutoScaleWorkingDaysAndWeekEndCost({ I2: i2Number })
       );
-      setResultDiffWorkingHours(
-        service.calculateCost([
-          { I1: i1Number },
-          { I2: i2Number },
-          { I3: i3Number },
-        ]) - service.calculateAutoScaleWorkingHoursCost({ I2: i2Number })
+      setInternetAppAutoScaleCost(
+        service.calculateInternetAppAutoScaleCost({ I2: i2Number })
+      );
+      setInternetCompanyAppAutoScaleCost(
+        service.calculateInternetCompanyAppAutoScaleCost({ I2: i2Number })
+      );
+      setDistributeurAppAutoScaleCost(
+        service.calculateDistributeurAppAutoScaleCost({ I2: i2Number })
+      );
+      setAdministratifAppAutoScaleCost(
+        service.calculateAdministratifAppAutoScaleCost({ I2: i2Number })
       );
     } else {
-      setResultActuel(service.calculateAutoScaleCost({ I3: i3Number }));
-      setResultActuelWorkingHours(
+      setAutoScaleCost(service.calculateAutoScaleCost({ I3: i3Number }));
+      setAutoScaleWorkingHoursCost(
         service.calculateAutoScaleWorkingHoursCost({ I3: i3Number })
       );
-      setResultDiff(
-        service.calculateCost([
-          { I1: i1Number },
-          { I2: i2Number },
-          { I3: i3Number },
-        ]) - service.calculateAutoScaleCost({ I3: i3Number })
+      setAutoScaleWorkingDaysAndWeekEndCost(
+        service.calculateAutoScaleWorkingDaysAndWeekEndCost({ I3: i3Number })
       );
-      setResultDiffWorkingHours(
-        service.calculateCost([
-          { I1: i1Number },
-          { I2: i2Number },
-          { I3: i3Number },
-        ]) - service.calculateAutoScaleWorkingHoursCost({ I3: i3Number })
+      setInternetAppAutoScaleCost(
+        service.calculateInternetAppAutoScaleCost({ I3: i3Number })
+      );
+      setInternetCompanyAppAutoScaleCost(
+        service.calculateInternetCompanyAppAutoScaleCost({ I3: i3Number })
+      );
+      setDistributeurAppAutoScaleCost(
+        service.calculateDistributeurAppAutoScaleCost({ I3: i3Number })
+      );
+      setAdministratifAppAutoScaleCost(
+        service.calculateAdministratifAppAutoScaleCost({ I3: i3Number })
       );
     }
 
-    setResultActuelWithoutScale(
+    setCost(
       service.calculateCost([
         { I1: i1Number },
         { I2: i2Number },
@@ -100,13 +121,7 @@ export const Autoscale = () => {
       ])
     );
 
-    // setResultActuel(
-    //   service.calculateCost([
-    //     { I1: i1Number },
-    //     { I2: i2Number },
-    //     { I3: i3Number },
-    //   ])
-    // );
+    setHasResults(true);
   };
 
   const setInputValue = (name, value) => {
@@ -116,20 +131,25 @@ export const Autoscale = () => {
       seti3Number(0);
     }
     if (name === 'i2-nb') {
-      seti2Number(value);
       seti1Number(0);
+      seti2Number(value);
+
       seti3Number(0);
     }
     if (name === 'i3-nb') {
-      seti3Number(value);
-      seti2Number(0);
       seti1Number(0);
+      seti2Number(0);
+      seti3Number(value);
     }
   };
 
+  const classNameBtn = isDisabled
+    ? 'hasiconLeft calculate disabled'
+    : 'hasiconLeft calculate';
   return (
     <>
-      <div className="home container">
+      <div className="container container-body">
+        <h1 className="af-title--content">Estimation Service Plan AutoScale</h1>
         <Table className="af-table">
           <Table.Header>
             <Table.Tr>
@@ -189,7 +209,6 @@ export const Autoscale = () => {
           <Table.Body>
             <Table.Tr>
               <Table.Td>
-                <label>Actuel :</label>
                 <Text
                   id="i1-nb"
                   name="i1-nb"
@@ -200,7 +219,6 @@ export const Autoscale = () => {
                 />
               </Table.Td>
               <Table.Td>
-                <label>Actuel :</label>
                 <Text
                   id="i2-nb"
                   name="i2-nb"
@@ -211,7 +229,6 @@ export const Autoscale = () => {
                 />
               </Table.Td>
               <Table.Td>
-                <label>Actuel :</label>
                 <Text
                   id="i3-nb"
                   name="i3-nb"
@@ -224,43 +241,53 @@ export const Autoscale = () => {
             </Table.Tr>
           </Table.Body>
         </Table>
-        <Button
-          classModifier="hasiconLeft"
-          id="validation-button"
-          onClick={calculHandler}>
-          <span className="af-btn__text">Calculer</span>
-          <i className="glyphicon glyphicon-stats" />
-        </Button>
-        <br />
-        <br />
-        {parseInt(resultActuel) > 0 && (
-          <>
-            <h2>Résultat</h2>
-            <p>
-              Le coût actuel avec Autoscale le samedi est de : {resultActuel}€ /
-              mois
-            </p>
-            <p>
-              Le coût actuel avec Autoscale le soir est de :
-              {resultActuelWorkingHours}€ / mois
-            </p>
-            <p>
-              Le coût actuel sans Autoscale est de : {resultActuelWithoutScale}€
-              / mois
-            </p>
-            <br />
-            {/* <p>
-              Econnomie réalisé :
-              <span className="badge badge-success">
-                {roundDecimal(resultDiff, 2)}
-              </span>
-              € / mois
-            </p> */}
-          </>
+
+        <div className="container-center">
+          <Button
+            disabled={isDisabled}
+            classModifier={classNameBtn}
+            id="validation-button"
+            onClick={calculHandler}>
+            <span className="af-btn__text">Calculer</span>
+            <i className="glyphicon glyphicon-stats" />
+          </Button>
+        </div>
+
+        {hasResults && (
+          <div class="container-result">
+            <h1>Résultats</h1>
+            <div class="container-card">
+              <CardPrice
+                title="AutoScale le samedi"
+                autoScaleCost={autoScaleCost}
+                cost={cost}></CardPrice>
+              <CardPrice
+                title="AutoScale soir du lundi au vendredi"
+                autoScaleCost={autoScaleWorkingHoursCost}
+                cost={cost}></CardPrice>
+              <CardPrice
+                title="AutoScale"
+                autoScaleCost={autoScaleWorkingDaysAndWeekEndCost}
+                cost={cost}></CardPrice>
+              <CardPrice
+                title="Internet"
+                autoScaleCost={internetAppAutoScaleCost}
+                cost={0}></CardPrice>
+              <CardPrice
+                title="Internet Entreprise"
+                autoScaleCost={internetCompanyAppAutoScaleCost}
+                cost={0}></CardPrice>
+              <CardPrice
+                title="Distributeur"
+                autoScaleCost={distributeurAppAutoScaleCost}
+                cost={0}></CardPrice>
+              <CardPrice
+                title="Administratif"
+                autoScaleCost={administratifAppAutoScaleCost}
+                cost={0}></CardPrice>
+            </div>
+          </div>
         )}
-        <br />
-        <br /> <br />
-        <br />
       </div>
     </>
   );
