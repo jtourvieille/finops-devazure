@@ -24,14 +24,14 @@ export const CardPrice = ({ title, autoScaleCost, cost }) => {
               {autoScaleCost}€ <small className="text-muted">/ mois</small>
             </span>
           </p>
-          <p>
-            Total sans AutoScale :
-            <span>
-              {cost}€ <small className="text-muted">/ mois</small>
-            </span>
-          </p>
           {parseInt(gain(autoScaleCost, cost)) > 0 && (
             <>
+              <p>
+                Total sans AutoScale :
+                <span>
+                  {cost}€ <small className="text-muted">/ mois</small>
+                </span>
+              </p>
               <p>
                 Gain :
                 <span>
