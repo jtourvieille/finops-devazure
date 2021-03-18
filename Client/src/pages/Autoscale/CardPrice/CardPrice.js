@@ -1,7 +1,7 @@
 import React from 'react';
 import './CardPrice.scss';
 
-export const CardPrice = ({ title, autoScaleCost, cost, costBrut }) => {
+export const CardPrice = ({ title, autoScaleCost, cost }) => {
   const roundDecimal = (nombre, precision) => {
     let tmp = Math.pow(10, precision);
     return Math.round(nombre * tmp) / tmp;
