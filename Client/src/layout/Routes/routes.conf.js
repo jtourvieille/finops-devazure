@@ -1,13 +1,13 @@
 import { Autoscale } from 'pages/Autoscale/Autoscale';
 import Home from 'pages/Home';
- 
+
 const routes = [
   {
     name: 'Home',
     path: '/',
     component: Home,
     titlebar: {
-      title: 'Simulateur',
+      title: '',
       subtitle: '',
     },
   },
@@ -16,10 +16,10 @@ const routes = [
     path: '/simulateurAutoscale',
     component: Autoscale,
     titlebar: {
-      title: 'Autoscale',
+      title: '',
       subtitle: '',
     },
   },
 ];
- 
+
 export default routes;

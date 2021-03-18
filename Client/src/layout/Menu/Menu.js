@@ -14,17 +14,17 @@ export const Menu = ({ location }) => (
       })}
       actionElt={
         <Link className="af-nav__link" to="/">
-          Simulateur
+          Estimation Service Plan
         </Link>
       }
     />
-	<NavBarItem
+    <NavBarItem
       classModifier={classNames({
         active: location && location.pathname === '/simulateurAutoscale',
       })}
       actionElt={
         <Link className="af-nav__link" to="/simulateurAutoscale">
-          Simulateur Autoscale
+          Estimation Service Plan Autoscale
         </Link>
       }
     />

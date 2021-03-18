@@ -11,6 +11,9 @@ export const HomeComponent = () => {
   const [i1NumberProjection, seti1NumberProjection] = useState(0);
   const [i2NumberProjection, seti2NumberProjection] = useState(0);
   const [i3NumberProjection, seti3NumberProjection] = useState(0);
+
+  const [isDisabled, setIsDisabled] = useState(true);
+
   const [resultActuel, setResultActuel] = useState(0);
   const [resultProjection, setResultProjection] = useState(0);
   const [resultDiff, setResultDiff] = useState(0);
@@ -24,6 +27,19 @@ export const HomeComponent = () => {
     setResultProjection(0);
     setResultActuel(0);
     setResultDiff(0);
+
+    if (
+      i1Number > 0 ||
+      i2Number > 0 ||
+      i3Number > 0 ||
+      i1NumberProjection > 0 ||
+      i2NumberProjection > 0 ||
+      i3NumberProjection > 0
+    ) {
+      setIsDisabled(false);
+    } else {
+      setIsDisabled(true);
+    }
   }, [
     i1Number,
     i2Number,
@@ -65,10 +81,14 @@ export const HomeComponent = () => {
     );
   };
 
+  const classNameBtn = isDisabled
+    ? 'hasiconLeft calculate disabled'
+    : 'hasiconLeft calculate';
+
   return (
     <>
       <div className="home container">
-        <h1 className="af-title--content">Simulateur</h1>
+        <h1 className="af-title--content">Estimation Service Plan</h1>
         <Table className="af-table">
           <Table.Header>
             <Table.Tr>
@@ -123,6 +143,9 @@ export const HomeComponent = () => {
                   </HelpButton>
                 </span>
               </Table.Th>
+              <Table.Th>
+                <span className="af-table-th-content">Total</span>
+              </Table.Th>
             </Table.Tr>
           </Table.Header>
           <Table.Body>
@@ -135,8 +158,29 @@ export const HomeComponent = () => {
                   value={i1Number}
                   onChange={({ value }) => seti1Number(parseInt(value) || 0)}
                 />
-                <br />
-                <br />
+              </Table.Td>
+              <Table.Td>
+                <label>Actuel :</label>
+                <Text
+                  id="i2-nb"
+                  name="i2-nb"
+                  value={i2Number}
+                  onChange={({ value }) => seti2Number(parseInt(value) || 0)}
+                />
+              </Table.Td>
+              <Table.Td>
+                <label>Actuel :</label>
+                <Text
+                  id="i3-nb"
+                  name="i3-nb"
+                  value={i3Number}
+                  onChange={({ value }) => seti3Number(parseInt(value) || 0)}
+                />
+              </Table.Td>
+              <Table.Td>{i1Number + i2Number + i3Number}</Table.Td>
+            </Table.Tr>
+            <Table.Tr>
+              <Table.Td>
                 <label>Projection :</label>
                 <Text
                   id="i1-nbP"
@@ -148,15 +192,6 @@ export const HomeComponent = () => {
                 />
               </Table.Td>
               <Table.Td>
-                <label>Actuel :</label>
-                <Text
-                  id="i2-nb"
-                  name="i2-nb"
-                  value={i2Number}
-                  onChange={({ value }) => seti2Number(parseInt(value) || 0)}
-                />
-                <br />
-                <br />
                 <label>Projection :</label>
                 <Text
                   id="i2-nbP"
@@ -168,15 +203,6 @@ export const HomeComponent = () => {
                 />
               </Table.Td>
               <Table.Td>
-                <label>Actuel :</label>
-                <Text
-                  id="i3-nb"
-                  name="i3-nb"
-                  value={i3Number}
-                  onChange={({ value }) => seti3Number(parseInt(value) || 0)}
-                />
-                <br />
-                <br />
                 <label>Projection :</label>
                 <Text
                   id="i3-nbP"
@@ -187,18 +213,22 @@ export const HomeComponent = () => {
                   }
                 />
               </Table.Td>
+              <Table.Td>
+                {i1NumberProjection + i2NumberProjection + i3NumberProjection}
+              </Table.Td>
             </Table.Tr>
           </Table.Body>
         </Table>
-        <Button
-          classModifier="hasiconLeft"
-          id="validation-button"
-          onClick={calculHandler}>
-          <span className="af-btn__text">Calculer</span>
-          <i className="glyphicon glyphicon-stats" />
-        </Button>
-        <br />
-        <br />
+        <div className="container-center">
+          <Button
+            disabled={isDisabled}
+            classModifier={classNameBtn}
+            id="validation-button"
+            onClick={calculHandler}>
+            <span className="af-btn__text">Calculer</span>
+            <i className="glyphicon glyphicon-stats" />
+          </Button>
+        </div>
         {parseInt(resultActuel) > 0 && (
           <>
             <h2>Résultat</h2>
@@ -211,19 +241,17 @@ export const HomeComponent = () => {
         {parseInt(resultDiff) > 0 && parseInt(resultProjection) > 0 && (
           <p>
             Econnomie réalisé :
-            <span className="badge badge-success">{resultDiff}</span>€ / mois
+            <span className="badge badge-success">{resultDiff}€ / mois</span>
           </p>
         )}
         {parseInt(resultDiff) < 0 && parseInt(resultProjection) > 0 && (
           <p>
-            Côut supplementaire :
-            <span className="badge badge-danger">{Math.abs(resultDiff)}</span>€
-            / mois
+            Côut supplémentaire :
+            <span className="badge badge-danger">
+              {Math.abs(resultDiff)}€ / mois
+            </span>
           </p>
         )}
-        <br />
-        <br /> <br />
-        <br />
       </div>
     </>
   );
