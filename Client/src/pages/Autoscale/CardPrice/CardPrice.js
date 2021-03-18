@@ -1,7 +1,7 @@
 import React from 'react';
 import './CardPrice.scss';
 
-export const CardPrice = ({ title, autoScaleCost, cost }) => {
+export const CardPrice = ({ title, autoScaleCost, cost, costBrut }) => {
   const roundDecimal = (nombre, precision) => {
     let tmp = Math.pow(10, precision);
     return Math.round(nombre * tmp) / tmp;
@@ -22,6 +22,12 @@ export const CardPrice = ({ title, autoScaleCost, cost }) => {
             Total :
             <span>
               {autoScaleCost}€ <small className="text-muted">/ mois</small>
+            </span>
+          </p>
+          <p>
+            Total sans AutoScale :
+            <span>
+              {cost}€ <small className="text-muted">/ mois</small>
             </span>
           </p>
           {parseInt(gain(autoScaleCost, cost)) > 0 && (
