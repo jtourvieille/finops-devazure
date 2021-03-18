@@ -102,9 +102,12 @@ export const HomeComponent = () => {
                   </span>
                   <HelpButton classModifier="small" mode="hover">
                     <ul>
-                      <li>{i1Data.coutMensuel} €/mois</li>
-                      <li>{i1Data.acu} ACU</li>
-                      <li>{i1Data.ram} Go RAM</li>
+                      <li>Prix : {i1Data.coutMensuel} €/mois</li>
+                      <li>Ressources :</li>
+                      <ul>
+                        <li>{i1Data.acu} ACU</li>
+                        <li>{i1Data.ram} Go RAM</li>
+                      </ul>
                     </ul>
                   </HelpButton>
                 </span>
@@ -119,9 +122,12 @@ export const HomeComponent = () => {
                   </span>
                   <HelpButton classModifier="small" mode="hover">
                     <ul>
-                      <li>{i2Data.coutMensuel} €/mois</li>
-                      <li>{i2Data.acu} ACU</li>
-                      <li>{i2Data.ram} Go RAM</li>
+                      <li>Prix : {i2Data.coutMensuel} €/mois</li>
+                      <li>Ressources :</li>
+                      <ul>
+                        <li>{i2Data.acu} ACU</li>
+                        <li>{i2Data.ram} Go RAM</li>
+                      </ul>
                     </ul>
                   </HelpButton>
                 </span>
@@ -136,9 +142,12 @@ export const HomeComponent = () => {
                   </span>
                   <HelpButton classModifier="small" mode="hover">
                     <ul>
-                      <li>{i3Data.coutMensuel} €/mois</li>
-                      <li>{i3Data.acu} ACU</li>
-                      <li>{i3Data.ram} Go RAM</li>
+                      <li>Prix : {i3Data.coutMensuel} €/mois</li>
+                      <li>Ressources :</li>
+                      <ul>
+                        <li>{i3Data.acu} ACU</li>
+                        <li>{i3Data.ram} Go RAM</li>
+                      </ul>
                     </ul>
                   </HelpButton>
                 </span>
