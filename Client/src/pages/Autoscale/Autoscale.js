@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { CardPrice } from 'pages/Autoscale/CardPrice/CardPrice';
 import { Table, Text, Button, HelpButton } from '@axa-fr/react-toolkit-all';
 import { CalculatorService } from '../../services/calc/calculator-service';
 import { InstanceService } from '../../services/calc/instance-service';
 import './Autoscale.scss';
-import { CardPrice } from 'pages/Autoscale/CardPrice/CardPrice';
 
 export const Autoscale = () => {
   const [i1Number, seti1Number] = useState(0);
@@ -14,6 +14,7 @@ export const Autoscale = () => {
   const [isDisabled, setIsDisabled] = useState(true);
 
   const [cost, setCost] = useState(0);
+  const [costForType, setCostForType] = useState(0);
   const [autoScaleCost, setAutoScaleCost] = useState(0);
   const [autoScaleWorkingHoursCost, setAutoScaleWorkingHoursCost] = useState(0);
   const [
@@ -72,7 +73,7 @@ export const Autoscale = () => {
         service.calculateAdministratifAppAutoScaleCost({ I1: i1Number })
       );
     } else if (i2Number > 0) {
-      setAutoScaleCost(service.calculateAutoScaleCost({ I2: i1Number }));
+      setAutoScaleCost(service.calculateAutoScaleCost({ I2: i2Number }));
       setAutoScaleWorkingHoursCost(
         service.calculateAutoScaleWorkingHoursCost({ I2: i2Number })
       );
@@ -121,6 +122,14 @@ export const Autoscale = () => {
       ])
     );
 
+    setCostForType(
+      service.calculateCost([
+        { I1: i1Number },
+        { I2: i2Number },
+        { I3: i3Number },
+      ]) * 2
+    );
+
     setHasResults(true);
   };
 
@@ -163,9 +172,12 @@ export const Autoscale = () => {
                   </span>
                   <HelpButton classModifier="small" mode="hover">
                     <ul>
-                      <li>{i1Data.coutMensuel} €/mois</li>
-                      <li>{i1Data.acu} ACU</li>
-                      <li>{i1Data.ram} Go RAM</li>
+                      <li>Prix : {i1Data.coutMensuel} €/mois</li>
+                      <li>Ressources : </li>
+                      <ul>
+                        <li>{i1Data.acu} ACU</li>
+                        <li>{i1Data.ram} Go RAM</li>
+                      </ul>
                     </ul>
                   </HelpButton>
                 </span>
@@ -180,9 +192,12 @@ export const Autoscale = () => {
                   </span>
                   <HelpButton classModifier="small" mode="hover">
                     <ul>
-                      <li>{i2Data.coutMensuel} €/mois</li>
-                      <li>{i2Data.acu} ACU</li>
-                      <li>{i2Data.ram} Go RAM</li>
+                      <li>Prix : {i2Data.coutMensuel} €/mois</li>
+                      <li>Ressources : </li>
+                      <ul>
+                        <li>{i2Data.acu} ACU</li>
+                        <li>{i2Data.ram} Go RAM</li>
+                      </ul>
                     </ul>
                   </HelpButton>
                 </span>
@@ -197,9 +212,12 @@ export const Autoscale = () => {
                   </span>
                   <HelpButton classModifier="small" mode="hover">
                     <ul>
-                      <li>{i3Data.coutMensuel} €/mois</li>
-                      <li>{i3Data.acu} ACU</li>
-                      <li>{i3Data.ram} Go RAM</li>
+                      <li>Prix : {i3Data.coutMensuel} €/mois</li>
+                      <li>Ressources</li>
+                      <ul>
+                        <li>{i3Data.acu} ACU</li>
+                        <li>{i3Data.ram} Go RAM</li>
+                      </ul>
                     </ul>
                   </HelpButton>
                 </span>
@@ -254,37 +272,45 @@ export const Autoscale = () => {
         </div>
 
         {hasResults && (
-          <div class="container-result">
+          <div className="container-result">
             <h1>Résultats</h1>
-            <div class="container-card">
-              <CardPrice
-                title="AutoScale le samedi"
-                autoScaleCost={autoScaleCost}
-                cost={cost}></CardPrice>
-              <CardPrice
-                title="AutoScale soir du lundi au vendredi"
-                autoScaleCost={autoScaleWorkingHoursCost}
-                cost={cost}></CardPrice>
-              <CardPrice
-                title="AutoScale"
-                autoScaleCost={autoScaleWorkingDaysAndWeekEndCost}
-                cost={cost}></CardPrice>
+            <div className="container-card">
               <CardPrice
                 title="Internet"
                 autoScaleCost={internetAppAutoScaleCost}
-                cost={0}></CardPrice>
+                cost={costForType}
+              />
               <CardPrice
                 title="Internet Entreprise"
                 autoScaleCost={internetCompanyAppAutoScaleCost}
-                cost={0}></CardPrice>
+                cost={costForType}
+              />
               <CardPrice
                 title="Distributeur"
                 autoScaleCost={distributeurAppAutoScaleCost}
-                cost={0}></CardPrice>
+                cost={costForType}
+              />
               <CardPrice
                 title="Administratif"
                 autoScaleCost={administratifAppAutoScaleCost}
-                cost={0}></CardPrice>
+                cost={costForType}
+              />
+
+              <CardPrice
+                title="AutoScale le samedi"
+                autoScaleCost={autoScaleCost}
+                cost={cost}
+              />
+              <CardPrice
+                title="AutoScale soir du lundi au vendredi"
+                autoScaleCost={autoScaleWorkingHoursCost}
+                cost={cost}
+              />
+              <CardPrice
+                title="AutoScale soir et week-end"
+                autoScaleCost={autoScaleWorkingDaysAndWeekEndCost}
+                cost={cost}
+              />
             </div>
           </div>
         )}
